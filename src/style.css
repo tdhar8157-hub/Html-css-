@@ -1,10 +1,17 @@
 /* Custom styles for PDS Print Card */
 
 @media print {
+    @page {
+        size: A4;
+        margin: 0;
+    }
+
     body {
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
         background: white !important;
+        width: 210mm;
+        height: 297mm;
     }
     
     header, footer, .print\:hidden, #back-btn, .flex-wrap, .flex-col.gap-4 {
@@ -12,16 +19,31 @@
     }
 
     #preview-view {
-        padding: 0 !important;
+        padding: 10mm !important;
         margin: 0 !important;
         display: block !important;
         background: white !important;
+        width: 100% !important;
     }
 
     #card-scaling-wrapper {
         transform: scale(1) !important;
         margin: 0 !important;
         height: auto !important;
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: center !important;
+        gap: 5mm !important;
+    }
+
+    #card-left, #card-right {
+        width: 86mm !important;
+        height: 116mm !important;
+        min-width: 86mm !important;
+        min-height: 116mm !important;
+        border: 1px solid black !important;
+        box-shadow: none !important;
+        margin: 0 !important;
     }
 
     .print\:shadow-none {
@@ -39,8 +61,15 @@
 
 /* Ensure card dimensions are preserved */
 #card-left, #card-right {
+    width: 480px;
+    height: 650px;
     min-width: 480px;
     min-height: 650px;
+}
+
+/* Increase PREVIEW MODE font size */
+#watermark-preview .text-4xl, #watermark-payment .text-4xl {
+    font-size: 5rem !important;
 }
 
 /* Watermark rotation */

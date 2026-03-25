@@ -11,6 +11,7 @@ let formData = {
     block: '',
     village: '',
     dealer: '',
+    dealerAddress: '',
     cardType: 'PH Card (Red/pink Card)',
     members: []
 };
@@ -119,6 +120,7 @@ function fillDemoData() {
         block: 'PALOJORI',
         village: 'POKHARIA',
         dealer: 'LAKHENDARMURMU',
+        dealerAddress: 'VILL-POKHARIA, PO-PALOJORI, DIST-DEOGHAR',
         cardType: 'PH Card (Red/pink Card)',
         members: [
             { id: Date.now() + 1, name: 'हदीस मियाँ', gender: 'Male', age: '77', relation: 'अन्य' },
@@ -137,6 +139,7 @@ function fillDemoData() {
     document.getElementById('block').value = formData.block;
     document.getElementById('village').value = formData.village;
     document.getElementById('dealer').value = formData.dealer;
+    document.getElementById('dealerAddress').value = formData.dealerAddress;
     document.getElementById('cardType').value = formData.cardType;
 
     renderMembers();
@@ -163,28 +166,40 @@ function renderMembers() {
     const body = document.getElementById('members-body');
     body.innerHTML = '';
 
-    formData.members.forEach(member => {
+    if (formData.members.length === 0) {
+        body.innerHTML = `
+            <tr>
+                <td colspan="5" class="px-4 py-8 text-center text-gray-400 italic">
+                    No family members added yet. Click "Add Member" to start.
+                </td>
+            </tr>
+        `;
+        return;
+    }
+
+    formData.members.forEach((member, index) => {
         const tr = document.createElement('tr');
+        tr.className = "hover:bg-gray-50 transition-colors";
         tr.innerHTML = `
             <td class="px-4 py-3">
-                <input type="text" value="${member.name}" onchange="updateMember(${member.id}, 'name', this.value)" placeholder="Name" required class="w-full px-3 py-1.5 border border-gray-200 rounded focus:ring-1 focus:ring-blue-500 outline-none">
+                <input type="text" value="${member.name}" onchange="updateMember(${member.id}, 'name', this.value)" placeholder="Name" required class="w-full px-3 py-1.5 border border-gray-200 rounded focus:ring-1 focus:ring-blue-500 outline-none text-sm">
             </td>
             <td class="px-4 py-3">
-                <select onchange="updateMember(${member.id}, 'gender', this.value)" required class="w-full px-3 py-1.5 border border-gray-200 rounded focus:ring-1 focus:ring-blue-500 outline-none bg-white">
+                <select onchange="updateMember(${member.id}, 'gender', this.value)" required class="w-full px-3 py-1.5 border border-gray-200 rounded focus:ring-1 focus:ring-blue-500 outline-none bg-white text-sm">
                     <option value="Male" ${member.gender === 'Male' ? 'selected' : ''}>Male</option>
                     <option value="Female" ${member.gender === 'Female' ? 'selected' : ''}>Female</option>
                     <option value="Other" ${member.gender === 'Other' ? 'selected' : ''}>Other</option>
                 </select>
             </td>
             <td class="px-4 py-3">
-                <input type="number" value="${member.age}" onchange="updateMember(${member.id}, 'age', this.value)" placeholder="Age" min="1" max="120" required class="w-full px-3 py-1.5 border border-gray-200 rounded focus:ring-1 focus:ring-blue-500 outline-none">
+                <input type="number" value="${member.age}" onchange="updateMember(${member.id}, 'age', this.value)" placeholder="Age" min="1" max="120" required class="w-full px-3 py-1.5 border border-gray-200 rounded focus:ring-1 focus:ring-blue-500 outline-none text-sm">
             </td>
             <td class="px-4 py-3">
-                <input type="text" value="${member.relation}" onchange="updateMember(${member.id}, 'relation', this.value)" placeholder="Relation" required class="w-full px-3 py-1.5 border border-gray-200 rounded focus:ring-1 focus:ring-blue-500 outline-none">
+                <input type="text" value="${member.relation}" onchange="updateMember(${member.id}, 'relation', this.value)" placeholder="Relation" required class="w-full px-3 py-1.5 border border-gray-200 rounded focus:ring-1 focus:ring-blue-500 outline-none text-sm">
             </td>
             <td class="px-4 py-3 text-center">
-                <button type="button" onclick="removeMember(${member.id})" class="p-2 text-red-500 hover:bg-red-50 rounded-full transition-colors">
-                    <i data-lucide="trash-2" class="w-5 h-5"></i>
+                <button type="button" onclick="removeMember(${member.id})" class="p-1.5 text-red-500 hover:bg-red-50 rounded-full transition-colors">
+                    <i data-lucide="trash-2" class="w-4 h-4"></i>
                 </button>
             </td>
         `;
@@ -213,6 +228,7 @@ function handleSubmit(e) {
     formData.block = document.getElementById('block').value;
     formData.village = document.getElementById('village').value;
     formData.dealer = document.getElementById('dealer').value;
+    formData.dealerAddress = document.getElementById('dealerAddress').value;
     formData.cardType = document.getElementById('cardType').value;
 
     // Validation
@@ -236,6 +252,7 @@ function updatePreview() {
     document.getElementById('preview-ration-no-left').textContent = `Ration Card No./ राशन कार्ड संख्या: ${formData.rationNo}`;
     document.getElementById('preview-ration-no-right').textContent = `Ration Card No./ राशन कार्ड संख्या: ${formData.rationNo}`;
     document.getElementById('preview-cardholder-name').textContent = `कार्डधारी का नाम: ${formData.nameHindi}`;
+    document.getElementById('preview-dealer-address').textContent = `डीलर का पता: ${formData.dealerAddress}`;
     
     const cardTypeHeader = document.getElementById('preview-card-type-header');
     const typeLabel = formData.cardType === 'Green Card' ? 'ग्रीन गृहस्थी योजना' : 'पूर्वविक्ताप्राप्त गृहस्थी योजना';
