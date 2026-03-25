@@ -19,7 +19,7 @@
     }
 
     #preview-view {
-        padding: 10mm !important;
+        padding: 2mm !important;
         margin: 0 !important;
         display: block !important;
         background: white !important;
@@ -33,14 +33,14 @@
         display: flex !important;
         flex-direction: row !important;
         justify-content: center !important;
-        gap: 5mm !important;
+        gap: 6mm !important;
     }
 
     #card-left, #card-right {
-        width: 86mm !important;
-        height: 116mm !important;
-        min-width: 86mm !important;
-        min-height: 116mm !important;
+        width: 90mm !important;
+        height: 135mm !important;
+        min-width: 90mm !important;
+        min-height: 135mm !important;
         border: 1px solid black !important;
         box-shadow: none !important;
         margin: 0 !important;
@@ -61,10 +61,10 @@
 
 /* Ensure card dimensions are preserved */
 #card-left, #card-right {
-    width: 480px;
-    height: 650px;
-    min-width: 480px;
-    min-height: 650px;
+    width: 450px;
+    height: 675px;
+    min-width: 450px;
+    min-height: 675px;
 }
 
 /* Increase PREVIEW MODE font size */

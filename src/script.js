@@ -11,7 +11,6 @@ let formData = {
     block: '',
     village: '',
     dealer: '',
-    dealerAddress: '',
     cardType: 'PH Card (Red/pink Card)',
     members: []
 };
@@ -120,7 +119,6 @@ function fillDemoData() {
         block: 'PALOJORI',
         village: 'POKHARIA',
         dealer: 'LAKHENDARMURMU',
-        dealerAddress: 'VILL-POKHARIA, PO-PALOJORI, DIST-DEOGHAR',
         cardType: 'PH Card (Red/pink Card)',
         members: [
             { id: Date.now() + 1, name: 'हदीस मियाँ', gender: 'Male', age: '77', relation: 'अन्य' },
@@ -139,7 +137,6 @@ function fillDemoData() {
     document.getElementById('block').value = formData.block;
     document.getElementById('village').value = formData.village;
     document.getElementById('dealer').value = formData.dealer;
-    document.getElementById('dealerAddress').value = formData.dealerAddress;
     document.getElementById('cardType').value = formData.cardType;
 
     renderMembers();
@@ -228,7 +225,6 @@ function handleSubmit(e) {
     formData.block = document.getElementById('block').value;
     formData.village = document.getElementById('village').value;
     formData.dealer = document.getElementById('dealer').value;
-    formData.dealerAddress = document.getElementById('dealerAddress').value;
     formData.cardType = document.getElementById('cardType').value;
 
     // Validation
@@ -249,10 +245,9 @@ function handleSubmit(e) {
 }
 
 function updatePreview() {
-    document.getElementById('preview-ration-no-left').textContent = `Ration Card No./ राशन कार्ड संख्या: ${formData.rationNo}`;
+    document.getElementById('preview-ration-val-left').textContent = formData.rationNo;
     document.getElementById('preview-ration-no-right').textContent = `Ration Card No./ राशन कार्ड संख्या: ${formData.rationNo}`;
     document.getElementById('preview-cardholder-name').textContent = `कार्डधारी का नाम: ${formData.nameHindi}`;
-    document.getElementById('preview-dealer-address').textContent = `डीलर का पता: ${formData.dealerAddress}`;
     
     const cardTypeHeader = document.getElementById('preview-card-type-header');
     const typeLabel = formData.cardType === 'Green Card' ? 'ग्रीन गृहस्थी योजना' : 'पूर्वविक्ताप्राप्त गृहस्थी योजना';
@@ -264,29 +259,14 @@ function updatePreview() {
     formData.members.forEach((member, index) => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
-            <td class="border border-black p-0.5 text-center">${index + 1}</td>
-            <td class="border border-black p-0.5 text-center">${member.name}</td>
-            <td class="border border-black p-0.5 text-center">${member.gender === 'Male' ? 'पु.' : 'म.'}</td>
-            <td class="border border-black p-0.5 text-center">${member.age}</td>
-            <td class="border border-black p-0.5 text-center">${member.relation}</td>
+            <td class="border border-black p-0.5 text-center font-bold">${index + 1}</td>
+            <td class="border border-black p-0.5 text-center font-bold">${member.name}</td>
+            <td class="border border-black p-0.5 text-center font-bold">${member.gender === 'Male' ? 'पु.' : 'म.'}</td>
+            <td class="border border-black p-0.5 text-center font-bold">${member.age}</td>
+            <td class="border border-black p-0.5 text-center font-bold">${member.relation}</td>
         `;
         membersBody.appendChild(tr);
     });
-
-    // Fill empty rows
-    const emptyRows = Math.max(0, 5 - formData.members.length);
-    for (let i = 0; i < emptyRows; i++) {
-        const tr = document.createElement('tr');
-        tr.className = 'h-5';
-        tr.innerHTML = `
-            <td class="border border-black p-0.5"></td>
-            <td class="border border-black p-0.5"></td>
-            <td class="border border-black p-0.5"></td>
-            <td class="border border-black p-0.5"></td>
-            <td class="border border-black p-0.5"></td>
-        `;
-        membersBody.appendChild(tr);
-    }
 
     document.getElementById('preview-member-count').textContent = `कुल व्यक्तियों की संख्या : ${formData.members.length}`;
     
